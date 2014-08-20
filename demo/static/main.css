@@ -1,0 +1,155 @@
+
+body { font: 12px Arial;}
+
+#dviviewcount {
+    float: left;
+}
+
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.grid path {
+    stroke-width: 0;
+}
+
+
+#tweetAxis {
+    stroke: red;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+    fill: none;
+}
+
+#tweetPath {
+    stroke: red;
+    stroke-width: 3;
+    fill: none;
+    opacity: 0.6;
+    
+}
+
+#viewcountPath {
+    stroke: steelblue;
+    stroke-width: 5;
+    fill: none;
+    opacity: 0.6;
+    
+}
+
+
+#viewcountAxis {
+    stroke: steelblue;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+    fill: none;
+}
+
+
+#dateAxis {
+    stroke: black;
+    stroke-width: 1;
+    fill: none;
+}
+
+#divtweet {
+    float: left;
+}
+
+#divviewcounttitle{
+    border-style: solid;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-width: 2px 2px 2px;
+    border-radius: 5px;
+    font-family: verdana;
+    opacity: 0.8;
+}
+
+.tweetauthor{
+    text-decoration: none;
+    font-size: 90%;
+}
+
+.tweetcontent{
+    font-size: 105%;
+    font-family:"verdana";
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
+
+.tweettime {
+    
+}
+
+#divviewcounttitle {
+
+}
+
+.tweetlist {
+    list-style-type:none;
+}
+
+#divtweetcontent {
+    overflow-y: scroll;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    box-shadow: 0 0 0 -3px rgba(0, 0, 0, 0);
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-width: 0 2px 2px;
+    border-right: 0px;
+    border-radius: 5px;
+}
+
+.tweethr {
+    opacity:0.2;
+}
+
+#title {background-color:#B8DBFF;}
+#panel {float:left;height:85vh;width:8vw;background-color:#B8DBFF;}
+
+#tweeton {
+    font-weight: bold;
+}
+
+
+.box {
+  font: 10px sans-serif;
+}
+
+.box line,
+.box rect,
+.box circle {
+  fill: steelblue;
+  stroke: #000;
+  stroke-width: 1px;
+}
+
+.box .center {
+  stroke-dasharray: 3,3;
+}
+
+.box .outlier {
+  fill: none;
+  stroke: #000;
+}
+
+.axis {
+  font: 12px sans-serif;
+}
+ 
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+ 
+.x.axis path { 
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}

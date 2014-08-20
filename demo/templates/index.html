@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    
+    {% load dajaxice_templatetags %}
+    {% dajaxice_js_import %}
+
+    {% load staticfiles %}
+    
+    <link rel="stylesheet" type="text/css" href="{% static "main.css" %}">
+    <script type=text/javascript src="{% static "d3.min.js" %}"> </script>
+    <script type=text/javascript src="{% static "jquery-2.1.0.min.js" %}"> </script>
+
+    <script type=text/javascript src="{% static "box.js" %}"> </script>
+    
+    <script type=text/javascript src="{% static "draw.js" %}"> </script>
+    <script type=text/javascript src="{% static "drawFeatureScore.js" %}"> </script>
+
+    <script type="text/javascript">
+      
+     var leftDate = new Date("2009-07-31");
+     var rightDate = new Date("2009-11-01");
+     
+     var parseDate = d3.time.format("%Y-%m-%d").parse;
+
+     var margin = {top: 30, right: 50, bottom: 30, left: 100};
+     var width;
+     var height;
+     var canvas;
+     
+     var svg;
+     var dateScale;
+     var dateAxis;
+     var viewcountData;
+     var viewcountScale;
+     var viewcountAxis;
+     var viewcountLine;
+     var tweetData;
+     var tweetScale;
+     var tweetAxis;
+     var tweetLine;
+     var videoID;
+     var uploadDate;
+
+     var videoIndex = 1;
+
+     var transitionDuration = 500;
+
+     var viewcountDots;
+     var tweetDots;
+
+     var verticalLine;
+
+     var dotBound = 6; // hours
+     var lastIndex = 1;
+     var mouseDate;
+     var mouseXPos;
+
+     var tmp;
+
+
+     
+     var fsMargin = {top: 30, right: 50, bottom: 120, left: 80};
+     var fsWidth = 800 - margin.left - margin.right;
+     var fsHeight = 400 - margin.top - margin.bottom;
+     
+     var fsMin = Infinity;
+     var fsMax = -Infinity;
+     var fsRowMax = 0;
+     var fsRowMin = 0;
+
+     var fsShowLabel = false;
+
+     var fsSvg;
+     var fsPlot;
+     var fsChart;
+
+     var fsXScale;
+     var fsXAxis;
+     var fsYScale;
+     var fsYAxis;
+     
+     onPress = function(event){
+       if (event.charCode != 113 && event.charCode != 101)
+       {
+	 return;
+       }
+
+       if ($('#videoID').is(':focus') || $('#comment').is(':focus') || $('#currentIndex').is(':focus'))
+       {
+	 return;
+       }
+       
+       if (event.charCode == 101)
+       {
+	 videoIndex += 1;
+	 Dajaxice.demo.get_videoInfo_index(
+	   function(data)
+	   {
+	     console.log(data);
+	     onDraw(data);
+	   },
+	   {'videoIndex': videoIndex});
+
+	 Dajaxice.demo.get_featureScore_index(
+	   function(data)
+	   {
+	     drawFeatureScore(data['featureScore']);
+	   },
+	   {'videoIndex': videoIndex});
+       }
+       else
+       {
+	 if (videoIndex <= 1)
+	 {
+	   return;
+	 }
+	 videoIndex -= 1;
+	 Dajaxice.demo.get_videoInfo_index(
+	   function(data)
+	   {
+	     console.log(data);
+	     onDraw(data);
+	   },
+	   {'videoIndex': videoIndex});
+
+	 Dajaxice.demo.get_featureScore_index(
+	   function(data)
+	   {
+	     drawFeatureScore(data['featureScore']);
+	   },
+	   {'videoIndex': videoIndex});
+       }
+     }
+
+     
+     $(document).keypress(onPress);
+     window.onload = function()
+     {
+
+       Dajaxice.demo.get_videoInfo_index(
+	 function(data)
+	 {
+	   initDrawing(data);
+	 },
+	 {'videoIndex': videoIndex});
+
+       Dajaxice.demo.get_featureScore_index(
+	 function(data)
+	 {
+	   initDrawFeatureScore(data['featureScore']);
+	 },
+	 {'videoIndex': videoIndex});
+	 
+       
+       
+       $("#videoID").keypress(function(event){
+	 console.log($("#videoID").val());
+	 if(event.keyCode == 13){
+	   Dajaxice.demo.get_videoInfo_videoID(function(data){ if (data.length==0) {alert("unknown videoID"); return;} else { onDraw(data);}}, {'videoID': $("#videoID").val()});
+	 }
+       });
+       
+       $("#videoIndex").keypress(function(event){
+	 if(event.keyCode == 13){
+	 Dajaxice.demo.get_videoInfo_index(function(data){ if (data.length==0) {alert("invalid index"); return;} else { onDraw(data);}}, {'index': $("#currentIndex").val()});
+	 }
+       });
+       
+     };
+
+     
+     
+    </script>
+    
+  </head>
+  <body>
+
+    <div id='title'>
+      <h1> Demo Of Twitter-Driven Views of YouTube Video</h1>
+    </div>
+
+    
+    <div id='panel'>
+      <p> Current videoID: </p>
+      <input type="sumbit" id="videoID" value="videoID" size="10">
+      <hr>
+      <p> Current Index: </p>
+      <input type="text" id="videoIndex" value="0" size="10">
+      <hr>
+    </div>
+
+
+    <div id='dviviewcount'>
+      <svg style='height:50vh;width:55vw' id='viewcount' align='left'> </svg>
+    </div>
+
+    
+    <div style='height:50vh;width:20vw' id='divtweet'>
+      <div id='divviewcounttitle'>
+	<p id='tweeton'> Tweets on  </p>
+      </div>
+      <div style='height:45vh;width:20vw' id='divtweetcontent'>
+      </div>
+    </div>
+
+
+    <div id='dvifeaturescore'>
+      <svg style='height:40vh;width:80vw' id='featurescore' align='left'> </svg>
+    </div>
+    
+  </body>
+</html>
