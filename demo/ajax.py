@@ -27,7 +27,7 @@ featureOldName_featureNewName = {
     'AT' : 'A.mention'
     }
 
-feature_order = ['intercept', 'T.tweet', 'T.hashtag', 'T.nbcTweet', 'T.RT', 'G.outdegree', 'G.pagerank', 'G.hub', 'G.auth', 'A.tweet', 'A.hashtag', 'A.mention', 'A.nbcTweet', 'A.RT', 'P.mention', 'P.nbcTweet', 'P.RT']
+feature_order = ['A.RT', 'A.hashtag', 'A.mention', 'A.nbcTweet', 'A.tweet', 'G.auth', 'G.hub', 'G.outdegree', 'G.pagerank', 'P.RT', 'P.mention', 'P.nbcTweet', 'T.RT', 'T.hashtag', 'T.nbcTweet', 'T.tweet', 'intercept']
 
 @dajaxice_register
 def get_videoInfo_index(request, videoIndex):

@@ -159,3 +159,32 @@ a:hover, a:visited, a:link, a:active
 #viewcountdailytweetfeature {
     float: left;
 }
+
+#featureScoreYAxis{
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#featureScoreXAxis{
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#brush {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+  fill-opacity: .9;
+}
+
+label {
+  position: relative;
+  top: 10px;
+  right: 10px;
+}

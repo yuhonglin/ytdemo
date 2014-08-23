@@ -1,189 +1,171 @@
 function initDrawFeatureScore(fsdata) {
 
-    fsWidth = $('#featurescore').width() - fsMargin.left - fsMargin.right,
-    fsHeight = $('#featurescore').height() - fsMargin.top - fsMargin.bottom;
+    width.featureScore = $('#featurescore').width() - margin.featureScore.left - margin.featureScore.right,
+    height.featureScore = $('#featurescore').height() - margin.featureScore.top - margin.featureScore.bottom;
 
-    fsMin = Infinity;
-    fsMax = -Infinity;
-
-    fsdata.forEach(function(x) {
-	fsRowMax = Math.max.apply(Math, x[1]);
-	fsRowMin = Math.min.apply(Math, x[1]);
-	if (fsRowMax > fsMax) fsMax = fsRowMax;
-	if (fsRowMin < fsMin) fsMin = fsRowMin;
-    });
-
-    fsChart = d3.box()
-	.whiskers(iqr(1.5))
-	.height(fsHeight)	
-	.domain([fsMin, fsMax])
-        .showLabels(fsShowLabel);
-
-    fsXScale = d3.scale.ordinal()
-		 .domain( fsdata.map(function(d) { console.log(d[0]); return d[0]; } ) )
-		 .rangeRoundBands([0 , fsWidth], 0.8, 0.1);
-
-    fsXAxis = d3.svg.axis()
-		   .scale(fsXScale)
-		   .orient("bottom");
-
-    fsYScale = d3.scale.linear()
-		 .domain([fsMin, fsMax])
-		 .range([fsHeight + fsMargin.top, 0 + fsMargin.top]);
- 
-    fsYAxis = d3.svg.axis()
-		   .scale(fsYScale)
-		   .orient("left");
- 
-    fsSvg = d3.select("#featurescore")
-	.attr("width", fsWidth + fsMargin.left + fsMargin.right)
-	.attr("height", fsHeight + fsMargin.top + fsMargin.bottom)
-	.attr("class", "box");
+    featureScoreSvg = d3.select("#featurescore")
+	    .attr("width", width.featureScore + margin.featureScore.left + margin.featureScore.right)
+	    .attr("height", height.featureScore + margin.featureScore.top + margin.featureScore.bottom);
     
-    fsPlot = fsSvg.append("g")
-	.attr("transform", "translate(" + fsMargin.left + "," + fsMargin.top + ")");
-    
-    fsPlot.selectAll(".box")
-	.data(fsdata)
-	.enter().append("g")
-	.attr("transform", function(d) { return "translate(" +  fsXScale(d[0])  + "," + fsMargin.top + ")"; } )
-	.call(fsChart.width(fsXScale.rangeBand()));
+    featureScoreCanvas = featureScoreSvg.append("g")
+	.attr("transform", "translate(" + margin.featureScore.left + "," + margin.featureScore.top + ")");
 
+    featureScoreXScale = d3.scale.ordinal()
+	.rangeRoundBands([0, width.featureScore], .1, 1);
+
+    featureScoreYScale = d3.scale.linear()
+	.range([height.featureScore, 0]);
+
+    featureScoreXAxis = d3.svg.axis()
+	.scale(featureScoreXScale)
+	.orient("bottom");
+
+    featureScoreYAxis = d3.svg.axis()
+	.scale(featureScoreYScale)
+	.orient("left");
+
+    // format the data
+    generateFeatureScoreData(fsdata);
+
+    // set the domain
+    featureScoreXScale.domain(featureScoreData.map(function(d) { return d.n; }));
+    featureScoreYScale.domain([d3.min(featureScoreData, function(d) { return d.s; }), d3.max(featureScoreData, function(d) { return d.s; })]);
+
+    featureScoreCanvas.selectAll(".bar")
+	.data(featureScoreData)
+	.enter().append("rect")
+	.attr("class", "bar")
+	.attr("x", function(d) { return featureScoreXScale(d.n); })
+	.attr("width", featureScoreXScale.rangeBand())
+	.attr("y", function(d) { return featureScoreYScale(Math.max(0, d.s)); })
+	.attr("height", function(d) { return Math.abs(featureScoreYScale(d.s)-featureScoreYScale(0)); });
+
+    // draw x axis
+    featureScoreCanvas.append("g")
+      .attr("id", "featureScoreXAxis")
+      .attr("transform", "translate(0," + height.featureScore + ")")
+      .call(featureScoreXAxis)
+	.selectAll("text")  
+        .style("text-anchor", "end")
+        .attr("transform", function(d) {
+            return "rotate(-40)";
+        });
+    
     // draw y axis
-    fsPlot.append("g")
-        .attr("class", "y axis")
-        .call(fsYAxis)
-	.append("text") // and text1
+    featureScoreCanvas.append("g")
+	.attr("id", "featureScoreYAxis")
+	.call(featureScoreYAxis)
+	.append("text")
 	.attr("transform", "rotate(-90)")
-	.attr("y", -50)
-        .attr("x", -80)
-	.attr("dy", ".71em")
+	.attr("y", 5)
+	.attr("dy", ".5em")
 	.style("text-anchor", "end")
-	.style("font-size", "16px") 
 	.text("Score in SVM");
-    
-    // draw x axis	
-    fsPlot.append("g")
-	.attr("class", "x axis")
-	.attr("transform", "translate(0," + (fsHeight  + fsMargin.top) + ")")
-	.call(fsXAxis)
-        .selectAll("text")  
-            .style("text-anchor", "end")
-            .attr("transform", function(d) {
-                return "rotate(-40)";
-                })
-	.append("text")             // text label for the x axis
-        .attr("x", (fsWidth / 2) )
-        .attr("y",  35 )
-	.attr("dy", ".71em")
-        .style("text-anchor", "middle")
-	.style("font-size", "16px") 
-        .text("Feature Name"); 
 
+    // add onclick
+    featureScoreSvg.on('click', onFeatureScoreClick);
+    
 }
 
 
 
 
-
-function drawFeatureScore(fsdata) {
-
-    fsWidth = $('#featurescore').width() - fsMargin.left - fsMargin.right,
-    fsHeight = $('#featurescore').height() - fsMargin.top - fsMargin.bottom;
-
-    fsMin = Infinity;
-    fsMax = -Infinity;
-
-    fsdata.forEach(function(x) {
-	fsRowMax = Math.max.apply(Math, x[1]);
-	fsRowMin = Math.min.apply(Math, x[1]);
-	if (fsRowMax > fsMax) fsMax = fsRowMax;
-	if (fsRowMin < fsMin) fsMin = fsRowMin;
-    });
-
-    fsChart = d3.box()
-	.whiskers(iqr(1.5))
-	.height(fsHeight)	
-	.domain([fsMin, fsMax])
-        .showLabels(fsShowLabel);
-
-    fsXScale = d3.scale.ordinal()
-		 .domain( fsdata.map(function(d) { console.log(d[0]); return d[0]; } ) )
-		 .rangeRoundBands([0 , fsWidth], 0.8, 0.1);
-
-    fsXAxis = d3.svg.axis()
-		   .scale(fsXScale)
-		   .orient("bottom");
-
-    fsYScale = d3.scale.linear()
-		 .domain([fsMin, fsMax])
-		 .range([fsHeight + fsMargin.top, 0 + fsMargin.top]);
- 
-    fsYAxis = d3.svg.axis()
-		   .scale(fsYScale)
-		   .orient("left");
- 
-    fsSvg = d3.select("#featurescore")
-	.attr("width", fsWidth + fsMargin.left + fsMargin.right)
-	.attr("height", fsHeight + fsMargin.top + fsMargin.bottom)
-	.attr("class", "box");
-
-    fsPlot.remove();
+function onDrawFeatureScore(fsdata) {
     
-    fsPlot = fsSvg.append("g")
-	.attr("transform", "translate(" + fsMargin.left + "," + fsMargin.top + ")");
-    
-    fsPlot.selectAll(".box")
-	.data(fsdata)
-	.enter().append("g")
-	.attr("transform", function(d) { return "translate(" +  fsXScale(d[0])  + "," + fsMargin.top + ")"; } )
-	.call(fsChart.width(fsXScale.rangeBand()));
+    width.featureScore = $('#featurescore').width() - margin.featureScore.left - margin.featureScore.right,
+    height.featureScore = $('#featurescore').height() - margin.featureScore.top - margin.featureScore.bottom;
 
+    featureScoreSvg.attr("width", width.featureScore + margin.featureScore.left + margin.featureScore.right)
+	.attr("height", height.featureScore + margin.featureScore.top + margin.featureScore.bottom);
+    
+    featureScoreCanvas.attr("transform", "translate(" + margin.featureScore.left + "," + margin.featureScore.top + ")");
+
+    featureScoreXScale = d3.scale.ordinal()
+	.rangeRoundBands([0, width.featureScore], .1, 1);
+
+    featureScoreYScale = d3.scale.linear()
+	.range([height.featureScore, 0]);
+
+    featureScoreXAxis = d3.svg.axis()
+	.scale(featureScoreXScale)
+	.orient("bottom");
+
+    featureScoreYAxis = d3.svg.axis()
+	.scale(featureScoreYScale)
+	.orient("left");
+
+    // format the data
+    generateFeatureScoreData(fsdata);
+
+    // set the domain
+    featureScoreXScale.domain(featureScoreData.map(function(d) { return d.n; }));
+    featureScoreYScale.domain([d3.min(featureScoreData, function(d) { return d.s; }), d3.max(featureScoreData, function(d) { return d.s; })]);
+
+    featureScoreCanvas.selectAll(".bar")
+	.data(featureScoreData)
+        .transition()
+	.duration(transitionDuration)        
+	.attr("class", "bar")
+	.attr("x", function(d) { return featureScoreXScale(d.n); })
+	.attr("width", featureScoreXScale.rangeBand())
+	.attr("y", function(d) { return featureScoreYScale(Math.max(0, d.s)); })
+	.attr("height", function(d) { return Math.abs(featureScoreYScale(d.s)-featureScoreYScale(0)); });
+
+    // draw x axis
+    featureScoreCanvas.select("#featureScoreXAxis")
+        .transition()
+	.duration(transitionDuration)        
+	.attr("transform", "translate(0," + height.featureScore + ")")
+	.call(featureScoreXAxis)
+	.selectAll("text")  
+        .style("text-anchor", "end")
+        .attr("transform", function(d) {
+            return "rotate(-40)";
+        });
+    
     // draw y axis
-    fsPlot.append("g")
-        .attr("class", "y axis")
-        .call(fsYAxis)
-	.append("text") // and text1
-	.attr("transform", "rotate(-90)")
-	.attr("y", -50)
-        .attr("x", -80)
-	.attr("dy", ".71em")
-	.style("text-anchor", "end")
-	.style("font-size", "16px") 
-	.text("Score in SVM");
-    
-    // draw x axis	
-    fsPlot.append("g")
-	.attr("class", "x axis")
-	.attr("transform", "translate(0," + (fsHeight  + fsMargin.top) + ")")
-	.call(fsXAxis)
-        .selectAll("text")  
-            .style("text-anchor", "end")
-            .attr("transform", function(d) {
-                return "rotate(-40)";
-                })
-	.append("text")             // text label for the x axis
-        .attr("x", (fsWidth / 2) )
-        .attr("y",  35 )
-	.attr("dy", ".71em")
-        .style("text-anchor", "middle")
-	.style("font-size", "16px") 
-        .text("Feature Name"); 
+    featureScoreCanvas.select("#featureScoreYAxis")
+        .transition()
+	.duration(transitionDuration)    
+	.call(featureScoreYAxis);
 
 }
 
 
+function generateFeatureScoreData(data)
+{
+    featureScoreData = [];
+    for( var i in data)
+    {
+	featureScoreData.push({n:data[i][0], s:mean(data[i][1])});
+    }
+}
 
- // Returns a function to compute the interquartile range.
-function iqr(k) {
-  return function(d, i) {
-    var q1 = d.quartiles[0],
-        q3 = d.quartiles[2],
-        iqr = (q3 - q1) * k,
-        i = -1,
-        j = d.length;
-    while (d[++i] < q1 - iqr);
-    while (d[--j] > q3 + iqr);
-    return [i, j];
-  };
-} 
+function onFeatureScoreClick()
+{
+    var featureScoreXScaleSorted = featureScoreXScale.domain(featureScoreData.sort(featureScoreSorted
+        ? function(a, b) { featureScoreSorted = false; return d3.ascending(a.n, b.n); }
+        : function(a, b) { featureScoreSorted = true; return b.s - a.s; })
+        .map(function(d) { return d.n; }))
+        .copy();
+
+    featureScoreCanvas.selectAll(".bar").transition().duration(750)
+        .attr("x", function(d) { return featureScoreXScaleSorted(d.n); });
+
+    featureScoreCanvas.select("#featureScoreXAxis").transition().duration(750)
+	.attr("transform", "translate(0," + height.featureScore + ")")    
+        .call(featureScoreXAxis)
+    	.selectAll("text")  
+        .style("text-anchor", "end");
+
+}
+
+
+function mean(numbers) {
+    var total = 0,
+        i;
+    for (i = 0; i < numbers.length; i += 1) {
+        total += numbers[i];
+    }
+    return total / numbers.length;
+}
