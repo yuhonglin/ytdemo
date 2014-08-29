@@ -70,8 +70,6 @@ def get_tweetInfo_index(request, videoIndex, date):
     except KeyError:
         return ''
 
-    
-
 
 @dajaxice_register
 def get_featureScore_index(request, videoIndex):

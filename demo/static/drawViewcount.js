@@ -8,7 +8,7 @@ function initDrawViewcount( rawdata )
     videoID = rawdata['videoID'];
     videoIndex = rawdata['videoIndex'];
     uploadDate = new Date(rawdata['viewcount'][0].d);
-    
+
     // select the viewcount svg
     viewcountSvg = d3.select("#viewcount")
 	    .attr("width", width.viewcount + margin.viewcount.left + margin.viewcount.right)

@@ -13,3 +13,6 @@ class Video(models.Model):
     tweetContent = models.CharField(max_length=20000)
     featureScore = models.CharField(max_length=10000)
     
+    # feature summary
+    activeFeature = models.CharField(max_length=3000)
+    graphFeature = models.CharField(max_length=3000)

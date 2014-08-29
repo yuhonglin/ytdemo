@@ -13,12 +13,12 @@ d3.box = function() {
 	numBars = 4,
 	curBar = 1,
 	tickFormat = null;
-    
+
     // For each small multiple…
     function box(g) {
+	
 	g.each(function(data, i) {
 	    
-	    console.log(data);
 	    var d = data[1].sort(d3.ascending);
 	    
 	    var g = d3.select(this),

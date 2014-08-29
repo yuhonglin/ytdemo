@@ -13,6 +13,14 @@ videoID_viewcount = pickle.load(open('../../tdb/videoID_historyViewcount_forDemo
 videoID_date_time_author_content = pickle.load(open('../../tdb/videoID_date_time_author_content_forDemo.pickle'))
 videoID_numTweet = pickle.load(open('../../tdb/videoID_numTweet_from2009-07-31_to2009-11-01_forDemo.pickle'))
 
+videoID_tweeterNumAT = pickle.load(open('../../tdb/videoID_TwitterUserNumAT.pickle'))
+videoID_tweeterNumRT = pickle.load(open('../../tdb/videoID_TwitterUserNumRT.pickle'))
+videoID_tweeterNumNbcTweet = pickle.load(open('../../tdb/videoID_TwitterUserNumNbcTweet.pickle'))
+videoID_tweeterNumHashtag = pickle.load(open('../../tdb/videoID_TwitterUserNumHashtag.pickle'))
+
+videoID_tweeterOutdegree = pickle.load(open('../../tdb/videoID_TwitterUserOutdegree.pickle'))
+
+
 videoID_featureName_score = pickle.load(open('../../tdb/videoID_featureName_score_sampled.pickle'))
 # process array
 for videoID in videoID_featureName_score.iterkeys():
@@ -86,10 +94,20 @@ for i, (videoID, dailyViewcountString) in enumerate(videoID_dailyViewcountString
     dailyNumTweet = videoID_dailyTweetString[videoID]
     tweetContent = videoID_tweetContentString[videoID]
     featureScore = str(list(map(list, videoID_featureName_score[videoID].iteritems())))
-    
-    output_cursor.execute( "INSERT INTO demo_video (videoID, videoIndex, dailyViewcount, dailyTweet, tweetContent, featureScore) VALUES (?, ?, ?, ?, ?, ?);", (videoID, i, buffer(zlib.compress(dailyViewcountString)), buffer(zlib.compress(dailyNumTweet)), buffer(zlib.compress(tweetContent)), buffer(zlib.compress(featureScore))) )
-    
-    
-    
+
+    # feature summary
+    activeFeature = str([
+        ['#mention', videoID_tweeterNumAT[videoID]],
+        ['#retweet', videoID_tweeterNumRT[videoID]],
+        ['#nbctweet', videoID_tweeterNumNbcTweet[videoID]],
+        ['#hashtag', videoID_tweeterNumHashtag[videoID]]])
+        
+
+    graphFeature = str([
+        ['#followers', videoID_tweeterOutdegree[videoID]]])
+
+    output_cursor.execute( "INSERT INTO demo_video ( videoID, videoIndex, dailyViewcount, dailyTweet, tweetContent, featureScore, activeFeature, graphFeature) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
+                           (videoID, i, buffer(zlib.compress(dailyViewcountString)), buffer(zlib.compress(dailyNumTweet)), buffer(zlib.compress(tweetContent)), buffer(zlib.compress(featureScore)), buffer(zlib.compress(activeFeature)), buffer(zlib.compress(graphFeature))))
+        
     
 output_db.commit()
