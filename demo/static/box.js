@@ -40,12 +40,14 @@ d3.box = function() {
 		    : d3.range(n);
 	    
 	    // Compute the new x-scale.
-	    var x1 = d3.scale.linear()
+	    var x1 = d3.scale.log()
+		    .base(10)
 		    .domain(domain && domain.call(this, d, i) || [min, max])
 		    .range([height, 0]);
 	    
 	    // Retrieve the old x-scale, if this is an update.
-	    var x0 = this.__chart__ || d3.scale.linear()
+	    var x0 = this.__chart__ || d3.scale.log()
+		    .base(10)
 		    .domain([0, Infinity])
 	    // .domain([0, max])
 		    .range(x1.range());
@@ -165,7 +167,8 @@ d3.box = function() {
 	    
 	    outlier.enter().insert("circle", "text")
 		.attr("class", "outlier")
-		.attr("r", 1)
+		.attr("r", 2)
+	        .style("fill", "steelblue")
 		.attr("cx", width / 2)
 		.attr("cy", function(i) { return x0(d[i]); })
 		.style("opacity", 1e-6)

@@ -1,5 +1,17 @@
 
-body { font: 12px Arial;}
+body {
+    margin: 0 auto;
+    font: 12px sans-serif;
+}
+
+#whole {
+    width: 90vw;
+    margin: 0 auto;
+    border: 2px solid;
+    border-radius: 25px;
+    padding: 10px;
+}
+
 
 
 
@@ -14,6 +26,54 @@ body { font: 12px Arial;}
 
 #tweetAxis {
     stroke: red;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+    fill: none;
+}
+
+#activefeaturexxaxis {
+    stroke: black;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+    fill: none;
+}
+
+#graphfeaturexxaxis {
+    stroke: black;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+    fill: none;
+}
+
+#graphfeaturexyaxis {
+    stroke: black;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+    fill: none;
+}
+
+#dviviewcount {
+    float: left;
+}
+
+#dvitweet {
+    float: left;
+}
+
+#dvifeaturescore {
+    float: left;
+}
+
+#dvitweet {
+    float: left;
+}
+
+#dvigraphscore {
+    float: left;
+}
+
+#activefeaturexyaxis {
+    stroke: black;
     stroke-width: 1;
     shape-rendering: crispEdges;
     fill: none;
@@ -43,6 +103,19 @@ body { font: 12px Arial;}
     fill: none;
 }
 
+#activefeaturexxaxis {
+    stroke: steelblue;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+    fill: none;
+}
+
+#activefeaturexyaxis {
+    stroke: steelblue;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+    fill: none;
+}
 
 #dateAxis {
     stroke: black;
@@ -134,9 +207,6 @@ a:hover, a:visited, a:link, a:active
   stroke: #000;
 }
 
-.axis {
-  font: 12px sans-serif;
-}
  
 .axis path,
 .axis line {
@@ -158,6 +228,18 @@ a:hover, a:visited, a:link, a:active
 
 #viewcountdailytweetfeature {
     float: left;
+}
+
+#viewcounttweetfeature {
+    float left;
+}
+ 
+#dviactivescore {
+    float: left;
+}
+
+#activefeature {
+    float: right;
 }
 
 #featureScoreYAxis{

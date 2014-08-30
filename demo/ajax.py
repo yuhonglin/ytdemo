@@ -85,3 +85,33 @@ def get_featureScore_index(request, videoIndex):
     return json.dumps( {
             'featureScore': ret
             } )
+
+
+@dajaxice_register
+def get_featureSummary_active(request, videoIndex):
+    video = Video.objects.get(videoIndex=videoIndex)
+    ret = eval(zlib.decompress(video.activeFeature))
+
+    for i in ret:
+        for j in range(0, len(i[1])):
+            i[1][j] += 1
+    
+    return json.dumps( {
+            'activeFeature': ret
+            } )
+
+
+@dajaxice_register
+def get_featureSummary_graph(request, videoIndex):
+    video = Video.objects.get(videoIndex=videoIndex)
+    ret = eval(zlib.decompress(video.graphFeature))
+
+    for i in ret:
+        for j in range(0, len(i[1])):
+            i[1][j] += 1
+    
+    return json.dumps( {
+            'graphFeature': ret
+            } )
+
+

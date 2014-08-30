@@ -9,6 +9,11 @@ function initDrawViewcount( rawdata )
     videoIndex = rawdata['videoIndex'];
     uploadDate = new Date(rawdata['viewcount'][0].d);
 
+    // update video link
+    $('#youtubevideoembed').html('<object width="300px" height="250px"><param name="movie" value="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></p\
+aram><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3" type="application/x-shockwave-flash" width="300px" height="250px" allowscriptacc\
+ess="always" allowfullscreen="true"></embed></object>');
+    
     // select the viewcount svg
     viewcountSvg = d3.select("#viewcount")
 	    .attr("width", width.viewcount + margin.viewcount.left + margin.viewcount.right)
@@ -96,6 +101,11 @@ function onDrawViewcount( rawdata )
     videoID = rawdata['videoID'];
     videoIndex = rawdata['videoIndex'];
     uploadDate = new Date(rawdata['viewcount'][0].d);
+
+    // update video link
+    $('#youtubevideoembed').html('<object width="300px" height="250px"><param name="movie" value="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></p\
+aram><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3" type="application/x-shockwave-flash" width="300px" height="250px" allowscriptacc\
+ess="always" allowfullscreen="true"></embed></object>');
     
     // select the viewcount svg
     viewcountSvg.attr("width", width.viewcount + margin.viewcount.left + margin.viewcount.right)

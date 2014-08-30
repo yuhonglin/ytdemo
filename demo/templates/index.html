@@ -2,6 +2,12 @@
 
 <html>
   <head>
+
+    <style>
+     #dviactivescore {
+       float: left;
+     }
+    </style>
     
     {% load dajaxice_templatetags %}
     {% dajaxice_js_import %}
@@ -19,6 +25,7 @@
     <script type=text/javascript src="{% static "drawTweet.js" %}"> </script>
     <script type=text/javascript src="{% static "drawBrush.js" %}"> </script>
     <script type=text/javascript src="{% static "drawFeatureScore.js" %}"> </script>
+    <script type=text/javascript src="{% static "drawFeatureSummary.js" %}"> </script>
 
     <script type="text/javascript">
 
@@ -87,24 +94,48 @@
      var featureScoreData;
      var featureScoreSorted = false;
 
+     var activeFeatureBox
+     var activeFeatureIsShowLabel = true;
+     var activeFeatureXScale;
+     var activeFeatureXAxis;
+     var activeFeatureYScale;
+     var activeFeatureYAxis;
+     var activeFeatureSvg;
+     var activeFeaturePlot;
+
+     var graphFeatureBox
+     var graphFeatureIsShowLabel = true;
+     var graphFeatureXScale;
+     var graphFeatureXAxis;
+     var graphFeatureYScale;
+     var graphFeatureYAxis;
+     var graphFeatureSvg;
+     var graphFeaturePlot;
+     
      var tmp;
      
      var width = { viewcount:0,
 		   tweet:0,
 		   context:0,
-		   featureScore:0
+		   featureScore:0,
+		   activeFeature:0,
+		   graphFeature:0
 		   };
      
      var height = { viewcount:0,
 		    tweet:0,
 		    context:0,
-		    featureScore:0		    
+		    featureScore:0,
+		    activeFeature:0,
+		    graphFeature:0		    
 		    };
      
-     var margin = { viewcount: {top: 30, right: 50, bottom: 10, left: 100},
-		    tweet: {top: 10, right: 50, bottom: 30, left: 100},
-		    context: {top: 10, right: 50, bottom: 10, left: 100},
-		    featureScore: {top: 20, right: 10, bottom: 55, left: 40}
+     var margin = { viewcount: {top: 30, right: 50, bottom: 10, left: 10},
+		    tweet: {top: 10, right: 50, bottom: 30, left: 10},
+		    context: {top: 10, right: 50, bottom: 10, left: 10},
+		    featureScore: {top: 20, right: 10, bottom: 55, left: 40},
+		    activeFeature: {top: 20, right: 10, bottom: 55, left: 40},
+		    graphFeature: {top: 20, right: 10, bottom: 55, left: 40}
 		    };
 
 
@@ -128,6 +159,21 @@
 	   initDrawFeatureScore(data['featureScore']);
 	 },
 	 {'videoIndex': videoIndex});
+
+       Dajaxice.demo.get_featureSummary_active(
+	 function(data)
+	 {
+	   initDrawActiveFeatureSummary(data['activeFeature']);
+	 },
+	 {'videoIndex': videoIndex});
+
+       Dajaxice.demo.get_featureSummary_graph(
+	 function(data)
+	 {
+	   initDrawGraphFeatureSummary(data['graphFeature']);
+	 },
+	 {'videoIndex': videoIndex});
+       
      };     
      
 
@@ -163,6 +209,21 @@
 	   onDrawFeatureScore(data['featureScore']);
 	 },
 	 {'videoIndex': videoIndex});
+
+	 Dajaxice.demo.get_featureSummary_active(
+	   function(data)
+	   {
+	     onDrawActiveFeatureSummary(data['activeFeature']);
+	   },
+	   {'videoIndex': videoIndex});
+	 
+	 Dajaxice.demo.get_featureSummary_graph(
+	   function(data)
+	   {
+	     onDrawGraphFeatureSummary(data['graphFeature']);
+	   },
+	   {'videoIndex': videoIndex});
+	 
        }
        else
        {
@@ -188,6 +249,20 @@
 	   onDrawFeatureScore(data['featureScore']);
 	 },
 	 {'videoIndex': videoIndex});
+
+	 Dajaxice.demo.get_featureSummary_active(
+	   function(data)
+	   {
+	     onDrawActiveFeatureSummary(data['activeFeature']);
+	   },
+	   {'videoIndex': videoIndex});
+	 
+	 Dajaxice.demo.get_featureSummary_graph(
+	   function(data)
+	   {
+	     onDrawGraphFeatureSummary(data['graphFeature']);
+	   },
+	   {'videoIndex': videoIndex});
 	 
        }
      }
@@ -200,24 +275,16 @@
   </head>
   <body>
 
+
+    
     <div id='title'>
       <h1> Demo Of Twitter-Driven Views of YouTube Video</h1>
     </div>
 
-    
-    <div id='panel'>
-      <p> Current videoID: </p>
-      <input type="sumbit" id="videoID" value="videoID" size="10">
-      <hr>
-      <p> Current Index: </p>
-      <input type="text" id="videoIndex" value="0" size="10">
-      <hr>
-    </div>
-
-
+    <div id="whole">
+      
     <div id='videoandtweet'>
       <div id='youtubevideoembed'>
-	<object width="420" height="315"><param name="movie" value="//www.youtube.com/v/ez4DgdurRPg?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/ez4DgdurRPg?hl=en_GB&amp;version=3" type="application/x-shockwave-flash" width="420" height="315" allowscriptaccess="always" allowfullscreen="true"></embed></object>
       </div>
       <div style='height:50vh;width:20vw' id='divtweet'>
 	<div id='divviewcounttitle'>
@@ -239,14 +306,24 @@
       </div>
 
       <div id='dvicontext'>
-	<svg style='height:5vh;width:50vw' id='context' align='left'> </svg>
+	<svg style='height:5vh;width:50vw' id='context'> </svg>
       </div>
 
-    <div id='dvifeaturescore'>
-      <svg style='height:40vh;width:25vw' id='featurescore' align='left'> </svg>
-    </div>
+      <div id='dvifeaturescore'>
+	<svg style='height:45vh;width:25vw' id='featurescore'> </svg>
+      </div>
+      
+      <div id='dviactivescore'>
+	<svg style='height:45vh;width:15vw' id='activefeature'> </svg>
+      </div>
+
+      <div id='dvigraphscore'>
+	<svg style='height:45vh;width:10vw' id='graphfeature'> </svg>
+      </div>
+      
     </div>
 
+    </div>
     
   </body>
 </html>
