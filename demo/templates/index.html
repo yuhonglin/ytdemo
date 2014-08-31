@@ -4,8 +4,104 @@
   <head>
 
     <style>
-     #dviactivescore {
+     #videoandtweet, #dvigraphscore, #dvicontext, #dvifeaturescore, #dviactivescore, #dviviewcount {
        float: left;
+     }
+
+     #vclabel {
+       font-size : 200%;
+       font-weight : bold;
+       color : "steelblue";
+     }
+
+     #tlabel {
+       font-size : 200%;
+       font-weight : bold;
+       color : "steelblue";
+     }
+     
+     legend {
+       margin-left : 20px;
+       font-weight : bold;
+       font-size : 200%;
+     }
+
+     fieldset {
+       padding:10px;
+       border-width: 3px;
+       margin: 5px 5px 5px 5px;
+     }
+
+     #whole {
+       width: 80%;
+       margin: 0 auto;
+     }
+
+     #title {
+       font-size:120%;
+       text-align:center;
+     }
+
+     #tweeton {
+       border-style: solid;
+       font-weight: bold;
+       font-size : 200%;
+       border: 1px solid rgba(0, 0, 0, .2);
+       border-width: 2px 2px 2px;
+       border-radius: 5px;
+     }
+     #divtweetcontent, #divtweet {
+       overflow-y: scroll;
+       border-style: solid;
+       box-shadow: 0 0 0 -3px rgba(0, 0, 0, 0);
+       border: 1px solid rgba(0, 0, 0, .2);
+       border-width: 2px 2px 2px;
+       border-right: 0px;
+       border-radius: 5px;
+     }
+     
+     .tweetcontent{
+       font-size: 105%;
+       font-family:"verdana";
+     }
+
+     
+     #viewcountPath {
+       fill : none;
+       stroke : steelblue;
+       stroke-width : 3px;
+     }
+
+     #tweetPath {
+       fill : none;
+       stroke : red;
+       stroke-width : 3px;
+     }
+     
+     .domain {
+       stroke : black;
+       stroke-width : 1px;
+       fill : none;
+     }
+
+     .tick line{
+       stroke : black;
+     }
+
+     .box line,
+     .box rect,
+     .box circle {
+       fill: steelblue;
+       stroke: #000;
+       stroke-width: 1px;
+     }
+
+     .bar {
+       fill: steelblue;
+     }
+
+     .viewcount-dots {
+       
      }
     </style>
     
@@ -130,12 +226,12 @@
 		    graphFeature:0		    
 		    };
      
-     var margin = { viewcount: {top: 30, right: 50, bottom: 10, left: 10},
-		    tweet: {top: 10, right: 50, bottom: 30, left: 10},
-		    context: {top: 10, right: 50, bottom: 10, left: 10},
-		    featureScore: {top: 20, right: 10, bottom: 55, left: 40},
-		    activeFeature: {top: 20, right: 10, bottom: 55, left: 40},
-		    graphFeature: {top: 20, right: 10, bottom: 55, left: 40}
+     var margin = { viewcount: {top: 30, right: 50, bottom: 10, left: 50},
+		    tweet: {top: 10, right: 50, bottom: 20, left: 50},
+		    context: {top: 5, right: 50, bottom: 10, left: 50},
+		    featureScore: {top: 20, right: 10, bottom: 80, left: 40},
+		    activeFeature: {top: 20, right: 10, bottom: 65, left: 40},
+		    graphFeature: {top: 20, right: 10, bottom: 65, left: 40}
 		    };
 
 
@@ -274,56 +370,74 @@
     
   </head>
   <body>
-
-
     
     <div id='title'>
-      <h1> Demo Of Twitter-Driven Views of YouTube Video</h1>
+      <h1> Demo Of Twitter-Driven Views of YouTube Video <a style="font-size:50%">(Press "e" and "q" to navigate) <a></h1>
     </div>
 
     <div id="whole">
       
-    <div id='videoandtweet'>
-      <div id='youtubevideoembed'>
-      </div>
-      <div style='height:50vh;width:20vw' id='divtweet'>
-	<div id='divviewcounttitle'>
-	  <p id='tweeton'> Tweets on  </p>
-	</div>
-	<div style='height:45vh;width:20vw' id='divtweetcontent'>
-	</div>
-      </div>
-    </div>
-
-
-    <div id='viewcounttweetfeature'>
-      <div id='dviviewcount'>
-	<svg style='height:20vh;width:50vw' id='viewcount' align='left'> </svg>
-      </div>
-
-      <div id='dvitweet'>
-	<svg style='height:20vh;width:50vw' id='tweet' align='left'> </svg>
-      </div>
-
-      <div id='dvicontext'>
-	<svg style='height:5vh;width:50vw' id='context'> </svg>
-      </div>
-
-      <div id='dvifeaturescore'>
-	<svg style='height:45vh;width:25vw' id='featurescore'> </svg>
+      <div id='videoandtweet' style='height:90vh;width:20vw'>
+	<fieldset id='videofieldset' style=' float:left; height:30vh;width:18vw'>
+	  <legend> Video </legend>
+	  <div id='youtubevideoembed'>
+	  </div>
+	</fieldset>
+	
+	<fieldset style='float:left'>
+	  <legend id='divviewcounttitle'> Tweets on </legend>
+	  <div style='height:49vh;width:18vw' id='divtweet'>
+	    <div style='height 49vh;width:18vw' id='divtweetcontent'>
+	    </div>
+	  </div>
+	</fieldset>
       </div>
       
-      <div id='dviactivescore'>
-	<svg style='height:45vh;width:15vw' id='activefeature'> </svg>
-      </div>
+      <div id='viewcounttweetfeature' height="90vh">
 
-      <div id='dvigraphscore'>
-	<svg style='height:45vh;width:10vw' id='graphfeature'> </svg>
+	<fieldset id="vtfieldset" style="width:50vw">
+	  <legend> Viewcount and Tweets </legend>
+	  <div id='dviviewcount'>
+	    <svg style='height:18vh;width:50vw' id='viewcount' align='left'> </svg>
+	  </div>
+	  
+	  <div id='dvitweet'>
+	    <svg style='height:18vh;width:50vw' id='tweet' align='left'> </svg>
+	  </div>
+	  
+	  <div id='dvicontext'>
+	    <svg style='height:3vh;width:50vw' id='context'> </svg>
+	  </div>
+	</fieldset>
+	
+	<fieldset id= "fsp" style='height:40vh;width:25vw; float:left'>
+	  <legend> Feature Scores in Predictor </legend>
+	  <div id='dvifeaturescore'>
+	    <svg style='height:40vh;width:25vw' id='featurescore'> </svg>
+	  </div>
+	</fieldset>
+	
+	<fieldset style='height:40vh;width:23vw; float:left'>
+	  <legend> Statistics on Twitter Users </legend>
+	  <div id='dviactivescore'>
+	    <svg style='height:40vh;width:15vw' id='activefeature'> </svg>
+	  </div>
+	  
+	  <div id='dvigraphscore'>
+	    <svg style='height:40vh;width:8vw' id='graphfeature'> </svg>
+	  </div>
+	</fieldset>
+	
       </div>
-      
     </div>
 
-    </div>
+    <div id="footer" style="clear:both;text-align:center;">Created by  <a href="http://yuhonglin.github.io/"> <em>Honglin Yu</em></a>; Powered by <a href="http://jquery.com/"><em>JQuery.js</em></a> and <a href="http://d3js.org/"><em>d3.js</em></a></div>
     
   </body>
 </html>
+
+
+
+
+
+

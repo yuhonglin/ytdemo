@@ -10,8 +10,8 @@ function initDrawViewcount( rawdata )
     uploadDate = new Date(rawdata['viewcount'][0].d);
 
     // update video link
-    $('#youtubevideoembed').html('<object width="300px" height="250px"><param name="movie" value="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></p\
-aram><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3" type="application/x-shockwave-flash" width="300px" height="250px" allowscriptacc\
+    $('#youtubevideoembed').html('<object width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-15)  + 'px"><param name="movie" value="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></p\
+aram><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3" type="application/x-shockwave-flash" width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-15) + 'px" allowscriptacc\
 ess="always" allowfullscreen="true"></embed></object>');
     
     // select the viewcount svg
@@ -45,9 +45,9 @@ ess="always" allowfullscreen="true"></embed></object>');
     viewcountAxis = d3.svg
 	.axis()
 	.scale(viewcountScale)
-        .tickFormat(d3.format('.2e'))
+//        .tickFormat(d3.format('.1e'))
         .orient("left").ticks(5);
-
+    
     viewcountLine = d3.svg.line()
 	    .x(function(d) { return dateScale(d.d); })
 	    .y(function(d) { return viewcountScale(d.c); });
@@ -86,6 +86,12 @@ ess="always" allowfullscreen="true"></embed></object>');
 	    .attr('id', 'viewcountverticalLine')
 	    .style("stroke-dasharray", ("3, 3"));
 
+    // draw text
+    viewcountCanvas.append("text")
+        .attr("id", "vclabel")
+	.attr("fill", "steelblue")
+        .attr("transform", "translate(" + width.viewcount*0.6 + "," + height.viewcount*0.6 +")")
+        .text("cumulated viewcount");
     
 }
 
@@ -103,8 +109,8 @@ function onDrawViewcount( rawdata )
     uploadDate = new Date(rawdata['viewcount'][0].d);
 
     // update video link
-    $('#youtubevideoembed').html('<object width="300px" height="250px"><param name="movie" value="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></p\
-aram><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3" type="application/x-shockwave-flash" width="300px" height="250px" allowscriptacc\
+    $('#youtubevideoembed').html('<object width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-15)  + 'px"><param name="movie" value="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></p\
+aram><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3" type="application/x-shockwave-flash" width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-15) + 'px" allowscriptacc\
 ess="always" allowfullscreen="true"></embed></object>');
     
     // select the viewcount svg
@@ -127,7 +133,7 @@ ess="always" allowfullscreen="true"></embed></object>');
     viewcountScale.domain([d3.min(viewcountData, function(d) { return d.c; }), d3.max(viewcountData, function(d) { return d.c; })]);
 
     viewcountAxis.scale(viewcountScale)
-        .tickFormat(d3.format('.2e'))
+//        .tickFormat(d3.format('.1e'))
         .orient("left").ticks(5);
 
     // draw y-axis

@@ -11,7 +11,7 @@ function initDrawBrush(rawdata)
     contextAxis = d3.svg.axis()
             .scale(contextXScale)
             .tickSize(height.context)
-            .tickPadding(0)
+            .tickPadding(1)
             .orient("bottom")
             .ticks(5);
     
@@ -21,7 +21,10 @@ function initDrawBrush(rawdata)
 
     contextSvg = d3.select("#context")
                     .attr("width", width.context + margin.context.left + margin.context.right)
-                    .attr("height", height.context + margin.context.top + margin.context.bottom);
+                    .attr("height", height.context + margin.context.top + margin.context.bottom)
+                    .on("mouseover", function(d){d3.select("#contextbackground").style({"fill": 'steelblue'});})
+                    .on("mouseout", function(d){d3.select("#contextbackground").style({"fill":"#F0F0F0"});});
+
     
     contextCanvas = contextSvg.append("g")
         .attr("transform", "translate(" + (margin.context.left) + "," + (margin.context.top) + ")");
@@ -37,11 +40,14 @@ function initDrawBrush(rawdata)
             .x(function(d) { return contextXScale(d.d); })
             .y0(height.context)
             .y1(0);
+        
+
 
     contextCanvas.append("path")
         .attr("id", "contextbackground")
-        .attr("fill", 'steelblue')
+        .attr("fill", "#F0F0F0")
 	.attr("d", contextArea(viewcountData));
+	
 
     brush.extent([initLeftDate, initRightDate]);
     
@@ -55,10 +61,10 @@ function initDrawBrush(rawdata)
         .attr("y", 0)
         .attr("height", height.context);
 
-    contextCanvas.append("text")
-        .attr("id", "contextinstructions")
-        .attr("transform", "translate("+ width.context *.33 +"," + (height.context + 20) + ")")
-        .text('Click and drag above to zoom / pan the data');
+    // contextCanvas.append("text")
+    //     .attr("id", "contextinstructions")
+    //     .attr("transform", "translate("+ width.context *.33 +"," + (height.context + 20) + ")")
+    //     .text('Click and drag above to zoom / pan the data');
 
 }
 
@@ -75,7 +81,7 @@ function onDrawBrush(rawdata)
     contextAxis = d3.svg.axis()
             .scale(contextXScale)
             .tickSize(height.context)
-            .tickPadding(0)
+            .tickPadding(1)
             .orient("bottom")
             .ticks(5);
 

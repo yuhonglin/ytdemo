@@ -99,6 +99,13 @@ function initDrawTweet( rawdata )
 	    .attr("stroke", "black")
 	    .attr('id', 'tweetverticalLine')
 	    .style("stroke-dasharray", ("3, 3"));
+
+    // draw text
+    tweetCanvas.append("text")
+        .attr("id", "tlabel")
+        .attr("fill", "red")
+        .attr("transform", "translate(" + width.tweet*0.6 + "," + height.tweet*0.6 +")")
+        .text("daily tweets");    
     
 }
 

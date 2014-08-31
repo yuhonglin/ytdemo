@@ -90,8 +90,18 @@ def get_featureScore_index(request, videoIndex):
 @dajaxice_register
 def get_featureSummary_active(request, videoIndex):
     video = Video.objects.get(videoIndex=videoIndex)
-    ret = eval(zlib.decompress(video.activeFeature))
 
+    tmp = zlib.decompress(video.activeFeature)
+
+    print tmp
+    
+    tmp = tmp.replace('#mention', 'A.mention')
+    tmp = tmp.replace("#retweet", 'A.retweet')
+    tmp = tmp.replace('#nbctweet', 'A.nbcTweet')
+    tmp = tmp.replace('#hashtag', 'A.hashtag')
+    
+    ret = eval(tmp)
+    
     for i in ret:
         for j in range(0, len(i[1])):
             i[1][j] += 1
@@ -104,8 +114,9 @@ def get_featureSummary_active(request, videoIndex):
 @dajaxice_register
 def get_featureSummary_graph(request, videoIndex):
     video = Video.objects.get(videoIndex=videoIndex)
-    ret = eval(zlib.decompress(video.graphFeature))
 
+    ret = eval(zlib.decompress(video.graphFeature))
+    
     for i in ret:
         for j in range(0, len(i[1])):
             i[1][j] += 1

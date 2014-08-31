@@ -110,7 +110,7 @@ Date.prototype.addDays = function(days) {
 
 function updateTweet(data) {
     console.log(data);
-    $('#divviewcounttitle').html("<p id='tweeton'> Tweets on " + mouseDate.getFullYear() + '-' + (mouseDate.getMonth()+1) + '-' + mouseDate.getDate() + "</p>");
+    $('#divviewcounttitle').html("Tweets on " + mouseDate.getFullYear() + '-' + (mouseDate.getMonth()+1) + '-' + mouseDate.getDate());
     var html = '';
     for (var i in data)
     {
