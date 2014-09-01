@@ -304,7 +304,7 @@ function onDraw(rawdata) {
 function updateTweet(data) {
 
     $('#divviewcounttitle').html("<p id='tweeton'> Tweets on " + mouseDate.getFullYear() + '-' + (mouseDate.getMonth()+1) + '-' + mouseDate.getDate() + "</p>");
-    tmp = data;
+
     var html = '';
     for (var i in data)
     {

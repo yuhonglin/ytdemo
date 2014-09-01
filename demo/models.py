@@ -16,3 +16,8 @@ class Video(models.Model):
     # feature summary
     activeFeature = models.CharField(max_length=3000)
     graphFeature = models.CharField(max_length=3000)
+
+    # rank and type
+    rankInPredictor = models.IntegerField(default=-1)
+    instanceType = models.CharField(max_length=100)
+    

@@ -40,7 +40,9 @@ def get_videoInfo_index(request, videoIndex):
             'viewcount': eval(zlib.decompress(video.dailyViewcount)),
             'numTweet': eval(zlib.decompress(video.dailyTweet)),
             'videoID': video.videoID,
-            'videoIndex': videoIndex
+            'videoIndex': videoIndex,
+            'rankInPredictor' : video.rankInPredictor,
+            'instanceType' : video.instanceType
             } )
 
 @dajaxice_register
@@ -93,8 +95,6 @@ def get_featureSummary_active(request, videoIndex):
 
     tmp = zlib.decompress(video.activeFeature)
 
-    print tmp
-    
     tmp = tmp.replace('#mention', 'A.mention')
     tmp = tmp.replace("#retweet", 'A.retweet')
     tmp = tmp.replace('#nbctweet', 'A.nbcTweet')

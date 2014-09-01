@@ -126,7 +126,7 @@
     <script type="text/javascript">
 
      var tweetLeftDate = new Date("2009-07-31");
-     var tweetRightDate = new Date("2009-11-01");
+     var tweetRightDate = new Date("2009-11-15");
 
       
      var initLeftDate;
@@ -207,6 +207,9 @@
      var graphFeatureYAxis;
      var graphFeatureSvg;
      var graphFeaturePlot;
+
+     var instanceType;
+     var rankInPredictor
      
      var tmp;
      
@@ -396,7 +399,7 @@
       <div id='viewcounttweetfeature' height="90vh">
 
 	<fieldset id="vtfieldset" style="width:50vw">
-	  <legend> Viewcount and Tweets </legend>
+	  <legend id = "vtlegend"> Viewcount and Tweets </legend>
 	  <div id='dviviewcount'>
 	    <svg style='height:18vh;width:50vw' id='viewcount' align='left'> </svg>
 	  </div>
@@ -410,8 +413,8 @@
 	  </div>
 	</fieldset>
 	
-	<fieldset id= "fsp" style='height:40vh;width:25vw; float:left'>
-	  <legend> Feature Scores in Predictor </legend>
+	<fieldset id = "fsp" style='height:40vh;width:25vw; float:left'>
+	  <legend id = "fslegend"> Feature Scores </legend>
 	  <div id='dvifeaturescore'>
 	    <svg style='height:40vh;width:25vw' id='featurescore'> </svg>
 	  </div>

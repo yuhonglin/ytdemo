@@ -8,7 +8,13 @@ function initDrawViewcount( rawdata )
     videoID = rawdata['videoID'];
     videoIndex = rawdata['videoIndex'];
     uploadDate = new Date(rawdata['viewcount'][0].d);
+    rankInPredictor = rawdata['rankInPredictor'] + 1;
+    instanceType = rawdata['instanceType'];
 
+    // update rankInPredictor
+    $('#fslegend').html('Feature Scores (rank:' + rankInPredictor + ')');
+    $('#vtlegend').html('Viewcount and Tweets (' + instanceType  + ')');
+    
     // update video link
     $('#youtubevideoembed').html('<object width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-15)  + 'px"><param name="movie" value="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></p\
 aram><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3" type="application/x-shockwave-flash" width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-15) + 'px" allowscriptacc\
@@ -107,7 +113,13 @@ function onDrawViewcount( rawdata )
     videoID = rawdata['videoID'];
     videoIndex = rawdata['videoIndex'];
     uploadDate = new Date(rawdata['viewcount'][0].d);
+    rankInPredictor = rawdata['rankInPredictor'] + 1;
+    instanceType = rawdata['instanceType'];
 
+    // update rankInPredictor
+    $('#fslegend').html('Feature Scores (rank:' + rankInPredictor + ')');
+    $('#vtlegend').html('Viewcount and Tweets (' + instanceType  + ')');
+      
     // update video link
     $('#youtubevideoembed').html('<object width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-15)  + 'px"><param name="movie" value="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></p\
 aram><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3" type="application/x-shockwave-flash" width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-15) + 'px" allowscriptacc\
