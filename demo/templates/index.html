@@ -243,6 +243,8 @@
      
      var viewcountCanvas;
      var tweetCanvas;
+     
+     var viewcountYMinRange = [0, 12000]
 
      var viewcountData;
      var tweetData;
@@ -256,7 +258,11 @@
      var viewcountLine;
      var tweetLine;
 
+     var viewcountBoundLine;
+     var pivotDate, viewcountPivotDateLine;
+     var tweetPivotDate, tweetPivotDateArea;
 
+     
      var videoID;
      var videoIndex = 1;
      var uploadDate;
@@ -276,6 +282,7 @@
      var featureScoreYAxis;
      var featureScoreData;
      var featureScoreSorted = false;
+     var featureScoreYMinRange = [-10,10];
 
      var activeFeatureBox
      var activeFeatureIsShowLabel = false;

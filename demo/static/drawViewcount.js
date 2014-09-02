@@ -8,6 +8,7 @@ function initDrawViewcount( rawdata )
     videoID = rawdata['videoID'];
     videoIndex = rawdata['videoIndex'];
     uploadDate = new Date(rawdata['viewcount'][0].d);
+    uploadDate.setHours(0);
     rankInPredictor = rawdata['rankInPredictor'] + 1;
     instanceType = rawdata['instanceType'];
 
@@ -46,8 +47,12 @@ ess="always" allowfullscreen="true"></embed></object>');
 
     // prepare to draw viewcount path
     viewcountScale = d3.scale.linear().range([height.viewcount, 0]);
-    viewcountScale.domain([d3.min(viewcountData, function(d) { return d.c; }), d3.max(viewcountData, function(d) { return d.c; })]);
-
+    viewcountScale.domain(
+	[
+	    d3.min(viewcountData, function(d) { return d.c; }),
+	    d3.max([d3.max(viewcountData, function(d) { return d.c; }), viewcountYMinRange[1]])
+	]);
+		  
     viewcountAxis = d3.svg
 	.axis()
 	.scale(viewcountScale)
@@ -62,6 +67,36 @@ ess="always" allowfullscreen="true"></embed></object>');
     viewcountCanvas.append("g")
 	.attr("id", "viewcountAxis")
 	.call(viewcountAxis);
+
+
+    // draw bound line
+    viewcountBoundLine = viewcountCanvas.append('line')
+	.attr({
+	    'x1': dateScale(dateScale.domain()[0]),
+	    'y1': viewcountScale(10000),
+	    'x2': dateScale(dateScale.domain()[1]),
+	    'y2': viewcountScale(10000)
+	})
+	.attr("stroke", "black")
+	.attr('id', 'viewcountBoundLine')
+	.style("stroke-dasharray", ("5, 10"));
+
+    // draw pivot date line
+    pivotDate = new Date(uploadDate.getTime());
+    pivotDate.addDays(90);
+    viewcountPivotDateLine = viewcountCanvas.append('line')
+	.attr({
+	    'x1': dateScale(pivotDate),
+	    'y1': 0,
+	    'x2': dateScale(pivotDate),
+	    'y2': viewcountScale.range()[0]
+	})
+	.attr("stroke", "black")
+	.attr('id', 'viewcountPivotDateLine')
+	.attr("clip-path", "url(#viewcountclip)")
+	.style("stroke-dasharray", ("5, 10"));
+
+
 
     // draw viewcount path
     viewcountCanvas.append("path")
@@ -113,6 +148,7 @@ function onDrawViewcount( rawdata )
     videoID = rawdata['videoID'];
     videoIndex = rawdata['videoIndex'];
     uploadDate = new Date(rawdata['viewcount'][0].d);
+    uploadDate.setHours(0);
     rankInPredictor = rawdata['rankInPredictor'] + 1;
     instanceType = rawdata['instanceType'];
 
@@ -142,7 +178,11 @@ ess="always" allowfullscreen="true"></embed></object>');
 
     // prepare to draw viewcount path
     viewcountScale = d3.scale.linear().range([height.viewcount, 0]);
-    viewcountScale.domain([d3.min(viewcountData, function(d) { return d.c; }), d3.max(viewcountData, function(d) { return d.c; })]);
+    viewcountScale.domain(
+	[
+	    d3.min(viewcountData, function(d) { return d.c; }),
+	    d3.max([d3.max(viewcountData, function(d) { return d.c; }), viewcountYMinRange[1]])
+	]);
 
     viewcountAxis.scale(viewcountScale)
 //        .tickFormat(d3.format('.1e'))
@@ -153,11 +193,31 @@ ess="always" allowfullscreen="true"></embed></object>');
         .transition()
 	.duration(transitionDuration)    
 	.call(viewcountAxis);
-
+    
     // draw viewcount path
     viewcountLine = d3.svg.line()
 	    .x(function(d) { return dateScale(d.d); })
 	    .y(function(d) { return viewcountScale(d.c); });
+
+    // draw bound line
+    viewcountBoundLine
+	.attr({
+	    'x1': dateScale(dateScale.domain()[0]),
+	    'y1': viewcountScale(10000),
+	    'x2': dateScale(dateScale.domain()[1]),
+	    'y2': viewcountScale(10000)
+	});
+
+    // draw pivot date line    
+    pivotDate = new Date(uploadDate.getTime());
+    pivotDate.addDays(90);
+    viewcountPivotDateLine
+	.attr({
+	    'x1': dateScale(pivotDate),
+	    'y1': 0,
+	    'x2': dateScale(pivotDate),
+	    'y2': viewcountScale.range()[0]
+	});
     
     viewcountCanvas.select("#viewcountPath")
         .transition()

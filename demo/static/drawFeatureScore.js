@@ -29,7 +29,7 @@ function initDrawFeatureScore(fsdata) {
 
     // set the domain
     featureScoreXScale.domain(featureScoreData.map(function(d) { return d.n; }));
-    featureScoreYScale.domain([d3.min(featureScoreData, function(d) { return d.s; }), d3.max(featureScoreData, function(d) { return d.s; })]);
+    featureScoreYScale.domain([d3.min([d3.min(featureScoreData, function(d) { return d.s; }), featureScoreYMinRange[0]]), d3.max([d3.max(featureScoreData, function(d) { return d.s; }), featureScoreYMinRange[1]])]);
 
     featureScoreCanvas.selectAll(".bar")
 	.data(featureScoreData)
@@ -99,7 +99,7 @@ function onDrawFeatureScore(fsdata) {
 
     // set the domain
     featureScoreXScale.domain(featureScoreData.map(function(d) { return d.n; }));
-    featureScoreYScale.domain([d3.min(featureScoreData, function(d) { return d.s; }), d3.max(featureScoreData, function(d) { return d.s; })]);
+    featureScoreYScale.domain([d3.min([d3.min(featureScoreData, function(d) { return d.s; }), featureScoreYMinRange[0]]), d3.max([d3.max(featureScoreData, function(d) { return d.s; }), featureScoreYMinRange[1]])]);
 
     featureScoreCanvas.selectAll(".bar")
 	.data(featureScoreData)

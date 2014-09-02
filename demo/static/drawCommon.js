@@ -2,6 +2,8 @@ function decideInitDateDomain(rawdata)
 {
     uploadDate = new Date(rawdata['viewcount'][0].d);
 
+    uploadDate.setHours(0);
+    
     initLeftDate = new Date("2009-07-31");
 
     if (initLeftDate < uploadDate)

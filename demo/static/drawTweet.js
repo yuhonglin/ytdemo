@@ -57,6 +57,19 @@ function initDrawTweet( rawdata )
 	.attr("id", "tweetAxis")
 	.call(tweetAxis);
 
+    // draw the pivot shade
+    tweetPivotDate = new Date(uploadDate.getTime());
+    tweetPivotDate.addDays(15);
+    tweetPivotDateArea = tweetCanvas.append('rect')
+	.attr("x", dateScale(uploadDate))
+	.attr("y", tweetScale.range()[1])
+        .attr("opacity", 0.1)
+	.attr("fill", "red")
+        .attr("clip-path", "url(#tweetclip)")
+	.attr("width", dateScale(tweetPivotDate) - dateScale(uploadDate))
+        .attr("height", tweetScale.range()[0]);
+
+    
     // draw tweet path
     tweetCanvas.append("path")
         .attr("id", "tweetPath")
@@ -155,6 +168,17 @@ function onDrawTweet( rawdata )
 	.duration(transitionDuration)
 	.call(tweetAxis);
 
+
+    // draw the pivot shade
+    tweetPivotDate = new Date(uploadDate.getTime());
+    tweetPivotDate.addDays(15);
+    tweetPivotDateArea
+	.attr("x", dateScale(uploadDate))
+	.attr("y", tweetScale.range()[1])
+	.attr("width", dateScale(tweetPivotDate) - dateScale(uploadDate))
+        .attr("height", tweetScale.range()[0]);
+
+    
     // draw tweet path
     tweetLine = d3.svg.line()
 	    .x(function(d) { return dateScale(d.d); })

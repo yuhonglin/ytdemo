@@ -136,6 +136,36 @@ function onBrush(){
 	.call(dateAxis);
 
 
+    // draw bound line
+    viewcountBoundLine
+	.attr({
+	    'x1': dateScale(dateScale.domain()[0]),
+	    'y1': viewcountScale(10000),
+	    'x2': dateScale(dateScale.domain()[1]),
+	    'y2': viewcountScale(10000)
+	});
+
+    
+    // draw pivot date line
+    viewcountPivotDateLine
+	.attr({
+	    'x1': dateScale(pivotDate),
+	    'y1': 0,
+	    'x2': dateScale(pivotDate),
+	    'y2': viewcountScale.range()[0]
+	});
+
+    // draw the pivot shade
+    tweetPivotDate = new Date(uploadDate.getTime());
+    tweetPivotDate.addDays(15);
+    tweetPivotDateArea
+	.attr("x", dateScale(uploadDate))
+	.attr("y", tweetScale.range()[1])
+	.attr("width", dateScale(tweetPivotDate) - dateScale(uploadDate))
+        .attr("height", tweetScale.range()[0]);
+
+    
+    
     // draw viewcount dots
     viewcountDots.attr("cy", function (d) { return viewcountScale(d.c); } ) // translate y value to a pixel
 	.attr("cx", function (d) { return dateScale(d.d); } ) // translate x value
