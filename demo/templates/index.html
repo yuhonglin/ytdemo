@@ -261,10 +261,10 @@
      var viewcountBoundLine;
      var pivotDate, viewcountPivotDateLine;
      var tweetPivotDate, tweetPivotDateArea;
-
+     
      
      var videoID;
-     var videoIndex = 1;
+     var videoIndex = 0;
      var uploadDate;
      
      var viewcountDots;
@@ -366,24 +366,36 @@
 	   initDrawGraphFeatureSummary(data['graphFeature']);
 	 },
 	 {'videoIndex': videoIndex});
+
+       $("#currentIndex").val(videoIndex);
        
-     };     
-     
+       $("#currentIndex").keypress(function(event){
+	 if(event.keyCode == 13){
+	   Dajaxice.demo.get_videoInfo_index(
+	     function(data)
+	     {
+	       if (data == '')
+	       {
+		 alert("Invalid Index");
+		 return;
+	       }
+	       videoIndex = $("#currentIndex").val();
+	       initDateRange(data);
+	       onDrawViewcount(data);
+	       onDrawTweet(data);
+	       onDrawBrush(data);
+	     },
+	     {'videoIndex': $("#currentIndex").val()});
+	 }
+       });
 
-
-     onPress = function(event){
-       if (event.charCode != 113 && event.charCode != 101)
-       {
-	 return;
-       }
-
-       if ($('#videoID').is(':focus') || $('#comment').is(':focus') || $('#currentIndex').is(':focus'))
-       {
-	 return;
-       }
-       
-       if (event.charCode == 101)
-       {
+       $("#incButton").click(
+	 function() {
+	    if (videoIndex >= 400)
+	 {
+	   return;
+	 }
+	 
 	 videoIndex += 1;
 	 Dajaxice.demo.get_videoInfo_index(
 	   function(data)
@@ -416,11 +428,15 @@
 	     onDrawGraphFeatureSummary(data['graphFeature']);
 	   },
 	   {'videoIndex': videoIndex});
-	 
-       }
-       else
-       {
-	 if (videoIndex <= 1)
+
+	   $("#currentIndex").val(videoIndex);
+	   
+	 }
+       )
+
+       $("#decButton").click(
+	 function () {
+	   if (videoIndex <= 0)
 	 {
 	   return;
 	 }
@@ -457,6 +473,109 @@
 	   },
 	   {'videoIndex': videoIndex});
 	 
+	 $("#currentIndex").val(videoIndex);
+	 }
+       )
+       
+     };     
+     
+
+
+     onPress = function(event){
+       if (event.charCode != 113 && event.charCode != 101)
+       {
+	 return;
+       }
+
+       if ($('#videoID').is(':focus') || $('#comment').is(':focus') || $('#currentIndex').is(':focus'))
+       {
+	 return;
+       }
+       
+       if (event.charCode == 101)
+       {
+	 if (videoIndex >= 400)
+	 {
+	   return;
+	 }
+	 
+	 videoIndex += 1;
+	 Dajaxice.demo.get_videoInfo_index(
+	   function(data)
+	   {
+	     lastIndex = 0;
+	     initDateRange(data);
+	     onDrawViewcount(data);
+	     onDrawTweet(data);
+	     onDrawBrush(data);
+	   },
+	   {'videoIndex': videoIndex});
+
+	 Dajaxice.demo.get_featureScore_index(
+	 function(data)
+	 {
+	   onDrawFeatureScore(data['featureScore']);
+	 },
+	 {'videoIndex': videoIndex});
+
+	 Dajaxice.demo.get_featureSummary_active(
+	   function(data)
+	   {
+	     onDrawActiveFeatureSummary(data['activeFeature']);
+	   },
+	   {'videoIndex': videoIndex});
+	 
+	 Dajaxice.demo.get_featureSummary_graph(
+	   function(data)
+	   {
+	     onDrawGraphFeatureSummary(data['graphFeature']);
+	   },
+	   {'videoIndex': videoIndex});
+
+	 $("#currentIndex").val(videoIndex);
+	 
+       }
+       else
+       {
+	 if (videoIndex <= 0)
+	 {
+	   return;
+	 }
+	 videoIndex -= 1;
+	 Dajaxice.demo.get_videoInfo_index(
+	   function(data)
+	   {
+	     lastIndex = 0;	     
+	     initDateRange(data);
+	     onDrawViewcount(data);
+	     onDrawTweet(data);
+	     onDrawBrush(data);
+	   },
+	   {'videoIndex': videoIndex});
+
+	 Dajaxice.demo.get_featureScore_index(
+	 function(data)
+	 {
+	   onDrawFeatureScore(data['featureScore']);
+	 },
+	 {'videoIndex': videoIndex});
+
+	 Dajaxice.demo.get_featureSummary_active(
+	   function(data)
+	   {
+	     onDrawActiveFeatureSummary(data['activeFeature']);
+	   },
+	   {'videoIndex': videoIndex});
+	 
+	 Dajaxice.demo.get_featureSummary_graph(
+	   function(data)
+	   {
+	     onDrawGraphFeatureSummary(data['graphFeature']);
+	   },
+	   {'videoIndex': videoIndex});
+	 
+	 $("#currentIndex").val(videoIndex);
+	 
        }
      }
 
@@ -475,7 +594,7 @@
     <div id="whole">
       <div id='videoandtweet'>
 	<fieldset id='videofieldset' style=' float:left; height:30vh;width:36vh'>
-	  <legend> Video </legend>
+	  <legend>Index: <input type="text" id="currentIndex" value="0" size="1">  <button type="button" id="decButton"><</button>  <button type="button" id="incButton">></button> </legend>
 	  <div id='youtubevideoembed'>
 	  </div>
 	</fieldset>
