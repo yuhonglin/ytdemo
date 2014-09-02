@@ -186,7 +186,7 @@ function onBrush(){
     tweetDots.attr("cy", function (d) { return tweetScale(d.c); } ) // translate y value to a pixel
 	.attr("cx", function (d) { return dateScale(d.d); } ) // translate x value
 	.attr("r", 3) // radius of circle
-        .attr("fill", "steelblue")
+        .attr("fill", "red")
 	.style("opacity", 0);  // opacity of circle
     tweetDots.enter().append("svg:circle")  // create a new circle for each value
         .attr("class", "tweet-dots")
