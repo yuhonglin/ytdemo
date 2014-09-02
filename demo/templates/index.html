@@ -244,8 +244,10 @@
      var viewcountCanvas;
      var tweetCanvas;
      
-     var viewcountYMinRange = [0, 12000]
+     var viewcountYMinRange = [0, 20000]
 
+     var pt_name = ['&#60', '&#62']
+     
      var viewcountData;
      var tweetData;
 
@@ -269,7 +271,7 @@
      
      var viewcountDots;
 
-     var dotBound = 12; // hours
+     var dotBound = 6; // hours
      var lastIndex = 1;
      var mouseDate;
      var mouseXPos;
@@ -304,6 +306,8 @@
 
      var instanceType;
      var rankInPredictor
+     var predictedTarget;
+     var viewcountRank;
      
      var tmp;
      

@@ -29,6 +29,8 @@ featureOldName_featureNewName = {
 
 feature_order = ['A.RT', 'A.hashtag', 'A.mention', 'A.nbcTweet', 'A.tweet', 'G.auth', 'G.hub', 'G.outdegree', 'G.pagerank', 'P.RT', 'P.mention', 'P.nbcTweet', 'T.RT', 'T.hashtag', 'T.nbcTweet', 'T.tweet', 'intercept']
 
+pt_name = ['Unpopular', 'Popular']
+
 @dajaxice_register
 def get_videoInfo_index(request, videoIndex):
     try:
@@ -41,8 +43,8 @@ def get_videoInfo_index(request, videoIndex):
             'numTweet': eval(zlib.decompress(video.dailyTweet)),
             'videoID': video.videoID,
             'videoIndex': videoIndex,
-            'rankInPredictor' : video.rankInPredictor,
-            'instanceType' : video.instanceType
+            'viewcountRank' : video.viewcountRank,
+            'predictedTarget' : int(video.predictedTarget)
             } )
 
 @dajaxice_register

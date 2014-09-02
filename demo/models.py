@@ -18,6 +18,7 @@ class Video(models.Model):
     graphFeature = models.CharField(max_length=3000)
 
     # rank and type
-    rankInPredictor = models.IntegerField(default=-1)
-    instanceType = models.CharField(max_length=100)
-    
+    # rankInPredictor = models.IntegerField(default=-1)
+    # instanceType = models.CharField(max_length=100)
+    viewcountRank = models.IntegerField(default=-1)
+    predictedTarget = models.CharField(max_length=20)

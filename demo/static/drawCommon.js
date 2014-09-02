@@ -46,6 +46,11 @@ function onMouseMove() {
     {
 	
 	mouseDate = dateScale.invert(mouseXPos);
+
+	if (mouseDate.getHours() > 12)
+	    mouseDate.addDays(1);
+
+	mouseDate.setHours(0);
 	
 	if (Math.ceil( (mouseDate-uploadDate) / 86400000) < 0)
 	{
@@ -72,7 +77,7 @@ function onMouseMove() {
 	    tweetDots[0][ lastIndex ].setAttribute("r", 3);
 	    tweetDots[0].forEach(function(d){ d.style[ "opacity" ] = 0; });
 	    
-	    lastIndex = Math.min(tweetDots[0].length-1, Math.ceil( (mouseDate-uploadDate) / 86400000));
+	    lastIndex = Math.min(tweetDots[0].length-1, Math.ceil( (mouseDate-uploadDate) / 86400000)-1);
 	    
 	    viewcountDots[0][lastIndex].setAttribute("r", 5);
 	    viewcountDots[0][ lastIndex ].style[ "opacity" ] = 0.6;
@@ -90,7 +95,7 @@ function onMouseMove() {
 	    tweetDots[0][ lastIndex ].setAttribute("r", 3);
 	    tweetDots[0].forEach(function(d){ d.style[ "opacity" ] = 0; });
 	    
-	    lastIndex = Math.min(tweetDots[0].length-1, Math.ceil( (mouseDate-uploadDate) / 86400000));
+	    lastIndex = Math.min(tweetDots[0].length-1, Math.ceil( (mouseDate-uploadDate) / 86400000)-1);
 	    
 	    viewcountDots[0][lastIndex].setAttribute("r", 5);
 	    viewcountDots[0][ lastIndex ].style[ "opacity" ] = 0.6;

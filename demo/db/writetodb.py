@@ -27,8 +27,8 @@ for videoID in videoID_featureName_score.iterkeys():
     videoID_featureName_score[videoID]['intercept'] =  [x[0] for x in videoID_featureName_score[videoID]['intercept']]
 
 
-videoID_rank = pickle.load(open('../../tdb/videoID_rankInPredictor.pickle'))
-videoID_type = pickle.load(open('../../tdb/videoID_instanceType.pickle'))    
+videoID_viewcountRank = pickle.load(open('../../tdb/videoID_viewcountRank_29998.pickle'))
+videoID_predictedTarget = pickle.load(open('../../tdb/videoID_predictedTarget.pickle'))
 
 
 output_db = sqlite3.connect('../../db.sqlite3')
@@ -108,8 +108,8 @@ for i, (videoID, dailyViewcountString) in enumerate(videoID_dailyViewcountString
     graphFeature = str([
         ['#followers', videoID_tweeterOutdegree[videoID]]])
 
-    output_cursor.execute( "INSERT INTO demo_video ( videoID, videoIndex, dailyViewcount, dailyTweet, tweetContent, featureScore, activeFeature, graphFeature, rankInPredictor, instanceType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-                           (videoID, i, buffer(zlib.compress(dailyViewcountString)), buffer(zlib.compress(dailyNumTweet)), buffer(zlib.compress(tweetContent)), buffer(zlib.compress(featureScore)), buffer(zlib.compress(activeFeature)), buffer(zlib.compress(graphFeature)), videoID_rank[videoID], videoID_type[videoID]))
+    output_cursor.execute( "INSERT INTO demo_video ( videoID, videoIndex, dailyViewcount, dailyTweet, tweetContent, featureScore, activeFeature, graphFeature, viewcountRank, predictedTarget) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                           (videoID, i, buffer(zlib.compress(dailyViewcountString)), buffer(zlib.compress(dailyNumTweet)), buffer(zlib.compress(tweetContent)), buffer(zlib.compress(featureScore)), buffer(zlib.compress(activeFeature)), buffer(zlib.compress(graphFeature)), videoID_viewcountRank[videoID], videoID_predictedTarget[videoID]))
     
         
     

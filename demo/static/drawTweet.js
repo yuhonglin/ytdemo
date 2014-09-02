@@ -97,7 +97,7 @@ function initDrawTweet( rawdata )
 	    {
 		updateTweet(data['tweetContent']);
 	    },
-	    { 'videoIndex': videoIndex, 'date': mouseDate.getFullYear()+'-'+(mouseDate.getMonth()+1)+'-'+mouseDate.getDate() }
+	    { 'videoIndex': videoIndex, 'date': mouseDate.getFullYear()+'-'+(mouseDate.getMonth()+1)+'-'+(mouseDate.getDate()) }
 	);
     });
     
