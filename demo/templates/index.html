@@ -8,6 +8,89 @@
        float: left;
      }
 
+     #videoandtweet {
+       position: relative;
+       height:100%;
+       width:25%;
+     }
+
+     #viewcounttweetfeature {
+       height:90vh;
+       width: 100vh;
+       float: left;
+     }
+
+     #dviviewcount {
+       position: relative;
+       top 0px;
+       height:20vh;
+       width:100vh;
+       float: left;       
+     }
+
+     #dvitweet {
+       position: relative;       
+       height:20vh;
+       width:100vh;
+       float: left;       
+     }
+
+     #dvicontext {
+       position: relative;
+       height:3vh;
+       width:100vh;
+       float: left;       
+     }
+
+     #vtfieldset {
+       position: relative;
+       width:100%;
+       height: 50%;
+     }
+
+     #fsp {
+       height:40vh;
+       width:45vh;
+       float:left
+     }
+
+     #featurescore {
+       height:40vh;
+       width:45vh;
+       float:left       
+     }
+
+
+     #statisticsoftweeter
+     {
+       height:40vh;
+       width:50vh;
+       float: left;
+     }
+
+     #dviactivescore {
+       height:40vh;
+       width:35vh;
+     }
+     
+     #activefeature {
+       height:40vh;
+       width:35vh;
+       float: left;
+     }
+
+     #dvigraphfeature {
+       height:40vh;
+       width:15vh;
+       float: left;
+     }
+     
+     #graphfeature {
+       height:40vh;
+       width:15vh;
+       float: left;
+     }
+          
      #vclabel {
        font-size : 200%;
        font-weight : bold;
@@ -27,14 +110,17 @@
      }
 
      fieldset {
-       padding:10px;
-       border-width: 3px;
-       margin: 5px 5px 5px 5px;
+       padding:1vh;
+       border-width:0px;
      }
 
      #whole {
-       width: 80%;
-       margin: 0 auto;
+       position: relative;
+       height: 90vh;
+       width: 160vh;
+       display: block;
+       margin-left: auto;
+       margin-right: auto;
      }
 
      #title {
@@ -50,6 +136,7 @@
        border-width: 2px 2px 2px;
        border-radius: 5px;
      }
+     
      #divtweetcontent, #divtweet {
        overflow-y: scroll;
        border-style: solid;
@@ -191,7 +278,7 @@
      var featureScoreSorted = false;
 
      var activeFeatureBox
-     var activeFeatureIsShowLabel = true;
+     var activeFeatureIsShowLabel = false;
      var activeFeatureXScale;
      var activeFeatureXAxis;
      var activeFeatureYScale;
@@ -200,7 +287,7 @@
      var activeFeaturePlot;
 
      var graphFeatureBox
-     var graphFeatureIsShowLabel = true;
+     var graphFeatureIsShowLabel = false;
      var graphFeatureXScale;
      var graphFeatureXAxis;
      var graphFeatureYScale;
@@ -379,9 +466,8 @@
     </div>
 
     <div id="whole">
-      
-      <div id='videoandtweet' style='height:90vh;width:20vw'>
-	<fieldset id='videofieldset' style=' float:left; height:30vh;width:18vw'>
+      <div id='videoandtweet'>
+	<fieldset id='videofieldset' style=' float:left; height:30vh;width:36vh'>
 	  <legend> Video </legend>
 	  <div id='youtubevideoembed'>
 	  </div>
@@ -389,48 +475,45 @@
 	
 	<fieldset style='float:left'>
 	  <legend id='divviewcounttitle'> Tweets on </legend>
-	  <div style='height:49vh;width:18vw' id='divtweet'>
-	    <div style='height 49vh;width:18vw' id='divtweetcontent'>
+	  <div style='height:49vh;width:36vh' id='divtweet'>
+	    <div style='height 49vh;width:36vh' id='divtweetcontent'>
 	    </div>
 	  </div>
 	</fieldset>
       </div>
       
-      <div id='viewcounttweetfeature' height="90vh">
-
-	<fieldset id="vtfieldset" style="width:50vw">
+      <div id='viewcounttweetfeature'>
+	<fieldset id="vtfieldset">
 	  <legend id = "vtlegend"> Viewcount and Tweets </legend>
 	  <div id='dviviewcount'>
-	    <svg style='height:18vh;width:50vw' id='viewcount' align='left'> </svg>
+	    <svg  id='viewcount' align='left'> </svg>
 	  </div>
 	  
 	  <div id='dvitweet'>
-	    <svg style='height:18vh;width:50vw' id='tweet' align='left'> </svg>
+	    <svg id='tweet' align='left'> </svg>
 	  </div>
 	  
 	  <div id='dvicontext'>
-	    <svg style='height:3vh;width:50vw' id='context'> </svg>
+	    <svg id='context'> </svg>
 	  </div>
 	</fieldset>
 	
-	<fieldset id = "fsp" style='height:40vh;width:25vw; float:left'>
+	<fieldset id = "fsp">
 	  <legend id = "fslegend"> Feature Scores </legend>
 	  <div id='dvifeaturescore'>
-	    <svg style='height:40vh;width:25vw' id='featurescore'> </svg>
+	    <svg id='featurescore'> </svg>
 	  </div>
 	</fieldset>
 	
-	<fieldset style='height:40vh;width:23vw; float:left'>
+	<fieldset id='statisticsoftweeter' >
 	  <legend> Statistics on Twitter Users </legend>
 	  <div id='dviactivescore'>
-	    <svg style='height:40vh;width:15vw' id='activefeature'> </svg>
+	    <svg id='activefeature'> </svg>
 	  </div>
-	  
 	  <div id='dvigraphscore'>
-	    <svg style='height:40vh;width:8vw' id='graphfeature'> </svg>
+	    <svg id='graphfeature'> </svg>
 	  </div>
 	</fieldset>
-	
       </div>
     </div>
 

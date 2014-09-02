@@ -1,8 +1,8 @@
 function initDrawTweet( rawdata )
 {
     // get the wdith and height
-    width.tweet = $('#tweet').width() - margin.tweet.left - margin.tweet.right;
-    height.tweet = $('#tweet').height() - margin.tweet.top - margin.tweet.bottom;
+    width.tweet = $('#dvitweet').width() - margin.tweet.left - margin.tweet.right;
+    height.tweet = $('#dvitweet').height() - margin.tweet.top - margin.tweet.bottom;
 
     // select the tweet svg
     tweetSvg = d3.select("#tweet")
@@ -113,8 +113,8 @@ function initDrawTweet( rawdata )
 function onDrawTweet( rawdata )
 {
     // get the wdith and height
-    width.tweet = $('#tweet').width() - margin.tweet.left - margin.tweet.right;
-    height.tweet = $('#tweet').height() - margin.tweet.top - margin.tweet.bottom;
+    width.tweet = $('#dvitweet').width() - margin.tweet.left - margin.tweet.right;
+    height.tweet = $('#dvitweet').height() - margin.tweet.top - margin.tweet.bottom;
 
     // select the tweet svg
     tweetSvg.attr("width", width.tweet + margin.tweet.left + margin.tweet.right)

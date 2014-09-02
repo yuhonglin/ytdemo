@@ -18,7 +18,7 @@ function decideInitDateDomain(rawdata)
 function initDateRange(rawdata)
 {
     // get width of the svg
-    width.viewcount = $('#viewcount').width() - margin.viewcount.left - margin.viewcount.right;
+    width.viewcount = $('#dviviewcount').width() - margin.viewcount.left - margin.viewcount.right;
 
     // generate the datescale
     dateScale = d3.time.scale().range([0, width.viewcount]);

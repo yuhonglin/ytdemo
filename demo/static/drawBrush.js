@@ -1,8 +1,8 @@
 function initDrawBrush(rawdata)
 {
     // get the wdith and height
-    width.context = $('#context').width() - margin.context.left - margin.context.right;
-    height.context = $('#context').height() - margin.context.top - margin.context.bottom;
+    width.context = $('#dvicontext').width() - margin.context.left - margin.context.right;
+    height.context = $('#dvicontext').height() - margin.context.top - margin.context.bottom;
 
     contextXScale = d3.time.scale()
             .range([0, width.context])
@@ -72,8 +72,8 @@ function initDrawBrush(rawdata)
 function onDrawBrush(rawdata)
 {
     // get the wdith and height
-    width.context = $('#context').width() - margin.context.left - margin.context.right;
-    height.context = $('#context').height() - margin.context.top - margin.context.bottom;
+    width.context = $('#dvicontext').width() - margin.context.left - margin.context.right;
+    height.context = $('#dvicontext').height() - margin.context.top - margin.context.bottom;
 
     contextXScale.range([0, width.context])
             .domain([d3.min(viewcountData, function(d) { return d.d; }), d3.max(viewcountData, function(d) { return d.d; })]);

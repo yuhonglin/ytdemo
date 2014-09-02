@@ -1,8 +1,8 @@
 function initDrawViewcount( rawdata )
 {
     // get the wdith and height
-    width.viewcount = $('#viewcount').width() - margin.viewcount.left - margin.viewcount.right;
-    height.viewcount = $('#viewcount').height() - margin.viewcount.top - margin.viewcount.bottom;
+    width.viewcount = $('#dviviewcount').width() - margin.viewcount.left - margin.viewcount.right;
+    height.viewcount = $('#dviviewcount').height() - margin.viewcount.top - margin.viewcount.bottom;
 
     // update some meta data
     videoID = rawdata['videoID'];
@@ -106,9 +106,9 @@ ess="always" allowfullscreen="true"></embed></object>');
 function onDrawViewcount( rawdata )
 {
     // get the wdith and height
-    width.viewcount = $('#viewcount').width() - margin.viewcount.left - margin.viewcount.right;
-    height.viewcount = $('#viewcount').height() - margin.viewcount.top - margin.viewcount.bottom;
-
+    width.viewcount = $('#dviviewcount').width() - margin.viewcount.left - margin.viewcount.right;
+    height.viewcount = $('#dviviewcount').height() - margin.viewcount.top - margin.viewcount.bottom;
+    
     // update some meta data
     videoID = rawdata['videoID'];
     videoIndex = rawdata['videoIndex'];
