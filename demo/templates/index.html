@@ -7,7 +7,7 @@
      #videoandtweet, #dvigraphscore, #dvicontext, #dvifeaturescore, #dviactivescore, #dviviewcount {
        float: left;
      }
-
+     
      #videoandtweet {
        position: relative;
        height:100%;
@@ -383,13 +383,13 @@
 		 alert("Invalid Index");
 		 return;
 	       }
-	       videoIndex = $("#currentIndex").val();
+	       videoIndex = parseInt($("#currentIndex").val());
 	       initDateRange(data);
 	       onDrawViewcount(data);
 	       onDrawTweet(data);
 	       onDrawBrush(data);
 	     },
-	     {'videoIndex': $("#currentIndex").val()});
+	     {'videoIndex': parseInt($("#currentIndex").val())});
 	 }
        });
 

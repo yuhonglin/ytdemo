@@ -27,7 +27,15 @@ for videoID in videoID_featureName_score.iterkeys():
     videoID_featureName_score[videoID]['intercept'] =  [x[0] for x in videoID_featureName_score[videoID]['intercept']]
 
 
-videoID_viewcountRank = pickle.load(open('../../tdb/videoID_viewcountRank_29998.pickle'))
+
+# videoID_viewcountRank = pickle.load(open('../../tdb/videoID_viewcountRank_29998.pickle')) -- this is ranked by viewcount increase in first 15 days
+videoID_viewcountRank = {}
+videoID_viewcountInrease = pickle.load(open('../../tdb/videoID_viewcountIncrease_90Days.pickle'))
+print len(videoID_viewcountInrease)
+videoID_sorted_byViewcountIncrease = zip(*sorted([(float(v),k) for k, v in videoID_viewcountInrease.iteritems() if k in videoID_featureName_score], reverse=True))[1]
+for videoID in videoID_featureName_score:
+    videoID_viewcountRank[videoID] = videoID_sorted_byViewcountIncrease.index(videoID)
+
 videoID_predictedTarget = pickle.load(open('../../tdb/videoID_predictedTarget.pickle'))
 
 
@@ -90,9 +98,22 @@ for videoID, date_time_author_content in videoID_date_time_author_content.iterit
 
 
 
+# used in sorting the video
+videoID_totalScore = {}
+for videoID, featureName_score in videoID_featureName_score.iteritems():
+    totalScore = 0
+    for scorelist in featureName_score.itervalues():
+        totalScore += sum(scorelist)
+    videoID_totalScore[videoID] = totalScore
 
-for i, (videoID, dailyViewcountString) in enumerate(videoID_dailyViewcountString.iteritems()):
+videoIDList_sortedByTotalScore = zip(*sorted([(v,k) for k, v in videoID_totalScore.iteritems()], reverse=True))[1]
 
+for i, videoID in enumerate(videoIDList_sortedByTotalScore):
+
+#for i, (videoID, dailyViewcountString) in enumerate(videoID_dailyViewcountString.iteritems()):
+
+    dailyViewcountString = videoID_dailyViewcountString[videoID]
+    
     dailyNumTweet = videoID_dailyTweetString[videoID]
     tweetContent = videoID_tweetContentString[videoID]
     featureScore = str(list(map(list, videoID_featureName_score[videoID].iteritems())))

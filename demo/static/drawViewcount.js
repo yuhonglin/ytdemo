@@ -13,12 +13,13 @@ function initDrawViewcount( rawdata )
     predictedTarget = rawdata['predictedTarget'];
 
     // update rankInPredictor
-    $('#fslegend').html('Predicted rank ' + pt_name[predictedTarget]  + ' top 5%');
-    $('#vtlegend').html('Viewcount and Tweets (real rank : ' + viewcountRank  + '/30k)');
+    $('#fslegend').html('Predicted viewcount ' + pt_name[predictedTarget]  + ' 10k');    
+    // $('#fslegend').html('Predicted rank ' + pt_name[predictedTarget]  + ' top 5%');
+    $('#vtlegend').html('Viewcount and Tweets (viewcount rank : ' + viewcountRank  + '/30k)');
     
     // update video link
-    $('#youtubevideoembed').html('<object width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-15)  + 'px"><param name="movie" value="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></p\
-aram><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3" type="application/x-shockwave-flash" width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-15) + 'px" allowscriptacc\
+    $('#youtubevideoembed').html('<object width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-25)  + 'px"><param name="movie" value="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></p\
+aram><param name="allowscriptaccess" value="always"></param><embed src="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3" type="application/x-shockwave-flash" width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-25) + 'px" allowscriptacc\
 ess="always" allowfullscreen="true"></embed></object>');
     
     // select the viewcount svg
@@ -73,9 +74,9 @@ ess="always" allowfullscreen="true"></embed></object>');
     viewcountBoundLine = viewcountCanvas.append('line')
 	.attr({
 	    'x1': dateScale(dateScale.domain()[0]),
-	    'y1': viewcountScale(18910),
+	    'y1': viewcountScale(10000),
 	    'x2': dateScale(dateScale.domain()[1]),
-	    'y2': viewcountScale(18910)
+	    'y2': viewcountScale(10000)
 	})
 	.attr("stroke", "black")
 	.attr('id', 'viewcountBoundLine')
@@ -154,8 +155,8 @@ function onDrawViewcount( rawdata )
 
     // update rankInPredictor
     // $('#fslegend').html('Feature Scores (prediction:' + predictedTarget + ')');
-    $('#fslegend').html('Predicted rank ' + pt_name[predictedTarget]  + ' top 5%');
-    $('#vtlegend').html('Viewcount and Tweets (real rank : ' + viewcountRank  + '/30k)');
+    $('#fslegend').html('Predicted viewcount ' + pt_name[predictedTarget]  + ' 10k');
+    $('#vtlegend').html('Viewcount and Tweets (viewcount rank : ' + viewcountRank  + '/30k)');
       
     // update video link
     $('#youtubevideoembed').html('<object width="' + $('#videofieldset').width()  +  'px" height="' + ($('#videofieldset').height()-15)  + 'px"><param name="movie" value="//www.youtube.com/v/' + videoID + '?hl=en_GB&amp;version=3"></param><param name="allowFullScreen" value="true"></p\
@@ -204,9 +205,9 @@ ess="always" allowfullscreen="true"></embed></object>');
     viewcountBoundLine
 	.attr({
 	    'x1': dateScale(dateScale.domain()[0]),
-	    'y1': viewcountScale(18910),
+	    'y1': viewcountScale(10000),
 	    'x2': dateScale(dateScale.domain()[1]),
-	    'y2': viewcountScale(18910)
+	    'y2': viewcountScale(10000)
 	});
 
     // draw pivot date line    
